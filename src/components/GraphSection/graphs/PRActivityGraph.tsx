@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './GraphStyles.scss';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { getprActivityData, getUserPRActivityData, prActivityData, UserPRActivityData } from '../../../services/PRActivityService';
+import GraphLoading from '../Components/GraphLoading';
+import GraphError from '../Components/GraphError';
+import { TeamData } from '../../../services/ProjectTeams';  
 interface PRActivityGraphProps {
-  selectedTeam: string;
+  selectedTeam: TeamData;
+  projectId: string;
+  year: number;
 }
 
-const data = [
-  { name: 'Merged', value: 24 },
-  { name: 'closed without Merged', value: 10 },
-  { name: 'Locked', value: 2 },
-];
 
 const COLORS = ['#2979FF', '#00E6C3', '#FFC400'];
 
@@ -38,19 +38,8 @@ const CustomLegend = () => (
       <span className="pr-activity-legend-dot" style={{ background: COLORS[1] }} />
       <span>closed without Merged</span>
     </div>
-    <div className="pr-activity-legend-row">
-      <span className="pr-activity-legend-dot" style={{ background: COLORS[2] }} />
-      <span>Locked</span>
-    </div>
   </div>
 );
-
-const devTableData = [
-  { name: 'Developer 1', merged: 80, notMerged: 22, locked: 14 },
-  { name: 'Developer 2', merged: 80, notMerged: 11, locked: 17 },
-  { name: 'Developer 3', merged: 92, notMerged: 34, locked: 15 },
-  { name: 'Developer 4', merged: 79, notMerged: 29, locked: 17 },
-];
 
 const getMergedColor = (value: number) => {
   if (value >= 90) return '#008000'; // dark green
@@ -60,9 +49,43 @@ const getNotMergedColor = (value: number) => {
   if (value >= 30) return '#D32F2F'; // lighter red
   return '#B71C1C'; // dark red
 };
-const getLockedColor = () => '#B71C1C';
 
-const PRActivityGraph: React.FC<PRActivityGraphProps> = ({ selectedTeam }) => {
+
+const PRActivityGraph: React.FC<PRActivityGraphProps> = ({ selectedTeam,projectId,year }) => {
+  console.log("PR Activity Graph")
+  const [data, setData] = useState<prActivityData[]>([]);
+  const [devTableData, setDevTableData] = useState<UserPRActivityData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await getprActivityData(projectId,selectedTeam.teamId, year);
+        const userresponse=await getUserPRActivityData(projectId,selectedTeam.teamId, year)
+        setData(response);
+        setDevTableData(userresponse)
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch PR data');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [projectId,selectedTeam, year]);
+
+  if (loading) {
+    return <GraphLoading />
+  }
+
+  if (error) {
+    return <GraphError />
+  }
+
   return (
     <div className="pr-activity-graph scrollable-graph-section">
       <div className="pr-activity-flex">
@@ -77,13 +100,14 @@ const PRActivityGraph: React.FC<PRActivityGraphProps> = ({ selectedTeam }) => {
                 label={renderCustomizedLabel}
                 outerRadius={150}
                 innerRadius={100}
-                dataKey="value"
+                dataKey="count"
                 isAnimationActive={false}
               >
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
+              <Tooltip />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -96,16 +120,23 @@ const PRActivityGraph: React.FC<PRActivityGraphProps> = ({ selectedTeam }) => {
               <th></th>
               <th>Merged</th>
               <th>Not Merged</th>
-              <th>Locked</th>
+              <th>Total Commits</th>
+              <th>Total Changed lines</th>
+              {/* <th>Locked</th> */}
             </tr>
           </thead>
           <tbody>
             {devTableData.map((dev, idx) => (
               <tr key={dev.name}>
-                <td>{dev.name}</td>
-                <td className="merged" style={{ background: getMergedColor(dev.merged) }}>{dev.merged} %</td>
-                <td className="not-merged" style={{ background: getNotMergedColor(dev.notMerged) }}>{dev.notMerged} %</td>
-                <td className="locked" style={{ background: getLockedColor() }}>{dev.locked} %</td>
+                <td className='name'>{dev.name}</td>
+                <td className="merged" style={{ background: '#2979FF' }}>{dev.mergedCount} </td>
+                <td className="not-merged" style={{ background: '#00E6C3' }}>{dev.notMergedCount} </td>
+                <td className="Total Commits" style={{ background: '#FFC400' }}>{dev.totalCommits} </td>
+                <td className='changed lines'>
+                <div className="Additions" style={{ background: getMergedColor(dev.mergedCount) }}>+{dev.totalAdditions} </div>
+                <div className="Deletions" style={{ background: getNotMergedColor(dev.mergedCount) }}>-{dev.totalDeletions} </div>
+                </td>
+                {/* <td className="locked" style={{ background: getLockedColor() }}>{dev.locked} %</td> */}
               </tr>
             ))}
           </tbody>
