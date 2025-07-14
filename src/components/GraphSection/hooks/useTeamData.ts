@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { getTeamData, TeamData } from "../../../services/ProjectTeams";
-
+import { TeamConfigurationService, TeamData } from "../../../services/TeamConfigurationService";
 export const useTeamData=( projectId: string)=>
 {
-    const [TeamData, setTeamData] = useState<TeamData[]>([{teamId:projectId , teamName: "Project"}]);
+    const [teamData, setTeamData] = useState<TeamData[]>([{teamId:projectId , teamName: "Project"}]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -11,7 +10,7 @@ export const useTeamData=( projectId: string)=>
         const fetchData = async () => {
           try {
             setLoading(true);
-            const response = await getTeamData(projectId);
+            const response = await TeamConfigurationService.getTeams(projectId);
             setTeamData(t => [...t, ...response]);
             setError(null);
           } catch (err) {
@@ -25,5 +24,5 @@ export const useTeamData=( projectId: string)=>
         fetchData();
       }, [projectId]);
 
-      return {error,loading,TeamData}
+      return {error,loading,teamData}
 }

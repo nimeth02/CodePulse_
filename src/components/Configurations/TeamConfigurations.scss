@@ -1,0 +1,255 @@
+.team-configurations {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5rem;
+  }
+
+  .configurations-content {
+    display: flex;
+    gap: 20px;
+    min-height: 400px;
+  }
+
+  .left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+    border-right: 1px solid #eee;
+
+    .team-selector {
+      .team-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        background-color: white;
+        color: #333;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1em;
+
+        &:focus {
+          outline: none;
+          border-color: #2196f3;
+          box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+        }
+
+        option {
+          padding: 10px;
+          background-color: white;
+          color: #333;
+        }
+      }
+    }
+
+    .team-members {
+      h3 {
+        margin-bottom: 10px;
+        color: #555;
+      }
+
+      .members-list {
+        .member-item {
+          padding: 8px;
+          border-bottom: 1px solid #eee;
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+
+  .right-panel {
+    flex: 1;
+    padding: 15px;
+
+    h3 {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .users-list {
+      .user-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+
+        &.selected {
+          background-color: #e3f2fd;
+        }
+
+        input[type="checkbox"] {
+          margin: 0;
+        }
+      }
+    }
+
+    .add-to-team-btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: #1976d2;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .create-team-container {
+    background: linear-gradient(to right, #ffffff, #f8fafc);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 1px solid #e2e8f0;
+
+    h2 {
+      color: #1e293b;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .input-group {
+        position: relative;
+
+        label {
+          display: block;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #475569;
+          margin-bottom: 0.5rem;
+          transition: color 0.2s ease;
+        }
+
+        input,
+        textarea {
+          width: 100%;
+          padding: 0.875rem 1rem;
+          border: 2px solid #e2e8f0;
+          border-radius: 8px;
+          font-size: 0.875rem;
+          color: #1e293b;
+          background-color: #ffffff;
+          transition: all 0.2s ease;
+
+          &:hover {
+            border-color: #cbd5e1;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+          }
+
+          &::placeholder {
+            color: #94a3b8;
+          }
+        }
+
+        textarea {
+          min-height: 120px;
+          resize: vertical;
+          line-height: 1.5;
+        }
+      }
+
+      .create-button {
+        background: linear-gradient(to right, #4f46e5, #4338ca);
+        color: white;
+        padding: 0.875rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(0);
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.3);
+        }
+
+        &:disabled {
+          background: #cbd5e1;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0)
+          );
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        &:hover:not(:disabled)::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

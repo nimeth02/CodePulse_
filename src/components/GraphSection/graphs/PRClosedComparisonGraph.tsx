@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {
-  CartesianGrid,
-  ComposedChart,
-  Line,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar } from "recharts";
 import { ResponsiveContainer } from "recharts";
 import GraphLoading from "../Components/GraphLoading";
 import GraphError from "../Components/GraphError";
 import { GraphProps } from "../Types/GraphType";
+import { usePRClosedComparisonData } from "../hooks/usePRClosedComparisonData";
 import { ComparisonBaseColors } from "../Constants/graphConstants";
-import { useCycleTimeComparisonData } from "../hooks/useCycleTimeComparisonData";
 
 const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
+  // Count occurrences of each key in the data
+  const getCount = (key: string) => {
+    return data.reduce((sum, item) => sum + (item[key] || 0), 0);
+  };
+
   return (
     <div
       style={{
@@ -26,9 +25,7 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
     >
       {barKeys.map((key: string, index: number) => {
         // Clean up the key name for display
-        const displayName = key
-          .replace(/averageCycleTimeInDays$/, "")
-          .replace(/_/g, " ");
+        const displayName = key.replace(/_merged$/, "").replace(/_/g, " ");
 
         return (
           <div
@@ -44,15 +41,16 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
               style={{
                 width: 16,
                 height: 16,
-                background:
-                  ComparisonBaseColors[index % ComparisonBaseColors.length],
+                background: key.endsWith("_merged")
+                  ? ComparisonBaseColors[index % ComparisonBaseColors.length]
+                  : "#000000",
                 borderRadius: "50%",
                 display: "inline-block",
                 marginRight: 8,
               }}
             />
             <span style={{ color: "#222", fontWeight: 500 }}>
-              {`${displayName}`}
+              {`${displayName}(${getCount(key)})`}
             </span>
           </div>
         );
@@ -61,30 +59,28 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
   );
 };
 
-const CycleTimeComparisonGraph: React.FC<GraphProps> = ({
+const ClosedComparisonGraph: React.FC<GraphProps> = ({
   selectedTeam,
   projectId,
   year,
 }) => {
   console.log("Closed Comparison Graph");
+  const { error, loading, data } = usePRClosedComparisonData(projectId, year);
 
-  const { error, loading, data } = useCycleTimeComparisonData(projectId, year);
-
-  const getLineKeys = (data: any[]) => {
-    const keys = new Set<string>();
-    data.forEach((item) => {
+  const getBarKeys = (data: any) => {
+    const keys = new Set();
+    data.forEach((item: any) => {
       Object.keys(item).forEach((key) => {
-        if (key !== "name") {
+        if (key !== "name" && !keys.has(key)) {
           keys.add(key);
         }
       });
     });
-    return Array.from(keys).sort();
+    return Array.from(keys).sort(); // Sort for consistent order
   };
 
-  const lineKeys = getLineKeys(data);
-
-  console.log(lineKeys);
+  const barKeys = getBarKeys(data);
+  console.log(barKeys);
 
   if (loading) {
     return <GraphLoading />;
@@ -97,7 +93,7 @@ const CycleTimeComparisonGraph: React.FC<GraphProps> = ({
   return (
     <div className="non-merged-graph">
       <ResponsiveContainer width="100%" height={400}>
-        <ComposedChart
+        <BarChart
           data={data}
           margin={{ top: 40, right: 30, left: 0, bottom: 0 }}
           barCategoryGap={20}
@@ -106,21 +102,25 @@ const CycleTimeComparisonGraph: React.FC<GraphProps> = ({
           <XAxis dataKey="name" tick={{ fontSize: 16 }} />
           <YAxis tick={{ fontSize: 16 }} />
           <Tooltip />
-          {lineKeys.map((key, index) => (
-            <Line
+          {barKeys.map((key: any, index: any) => (
+            <Bar
               key={key}
-              type="monotone"
               dataKey={key}
-              stroke={ComparisonBaseColors[index % ComparisonBaseColors.length]}
-              strokeWidth={3}
-              dot={false}
+              barSize={18}
+              stackId={key.split("_")[0]}
+              fill={
+                key.endsWith("_merged")
+                  ? ComparisonBaseColors[index % ComparisonBaseColors.length]
+                  : "#000000"
+              }
+              name={key}
             />
           ))}
-        </ComposedChart>
+        </BarChart>
       </ResponsiveContainer>
-      <CustomLegend barKeys={lineKeys} data={data} />
+      <CustomLegend barKeys={barKeys} data={data} />
     </div>
   );
 };
 
-export default CycleTimeComparisonGraph;
+export default ClosedComparisonGraph;
