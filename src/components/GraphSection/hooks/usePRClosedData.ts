@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPRClosedData, PRClosedData } from "../../../services/PRClosedService";
 
-export const usePRData=(selectedTeam: string, projectId: string, year: number)=>
+export const usePRClosedData=( projectId: string,selectedTeam: string, year: number)=>
 {
     const [data, setData] = useState<PRClosedData[]>([]);
     const [loading, setLoading] = useState(true);

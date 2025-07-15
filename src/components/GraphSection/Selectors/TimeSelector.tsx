@@ -1,6 +1,8 @@
 import React from "react";
+import { TimeSelectorProps } from '../Types/SelectorTypes';
+import { timeOptions } from "../Constants/graphConstants";
 
-const TimeSelector =({selectedTime,setSelectedTime,timeOptions}:{selectedTime:number,setSelectedTime:(selectedTeam:number)=>void,timeOptions:number[]})=>{
+const TimeSelector =({selectedTime,setSelectedTime}: TimeSelectorProps)=>{
   console.log("Time selector")
 return (
     <select 

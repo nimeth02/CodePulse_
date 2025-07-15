@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GraphType } from "../Types/GraphType";
-import { TeamData } from "../../../services/ProjectTeams";
+import { TeamData } from "@services/ProjectTeams";
 
 export const useGraphSection = (projectId:string) => {
     const [activeTab, setActiveTab] = useState<GraphType>('closed');

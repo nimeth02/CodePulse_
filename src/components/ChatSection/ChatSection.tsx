@@ -1,7 +1,9 @@
-import React from 'react';
-import './ChatSection.scss';
+import React from "react";
+import "./ChatSection.scss";
 
 const ChatSection: React.FC = () => {
+  console.log("chat section");
+
   return (
     <div className="chatbot">
       <div className="chatbot-messages">
@@ -15,4 +17,4 @@ const ChatSection: React.FC = () => {
   );
 };
 
-export default ChatSection; 
+export default ChatSection;

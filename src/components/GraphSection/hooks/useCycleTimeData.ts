@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getPRClosedData, PRClosedData } from "../../../services/PRClosedService";
+import { CycleTimeData, getCycleTimeData } from "../../../services/CycleTimeService";
 
-export const usePRData=(selectedTeam: string, projectId: string, year: number)=>
+export const useCycleTimeData=(selectedTeam: string, projectId: string, year: number)=>
 {
-    const [data, setData] = useState<PRClosedData[]>([]);
+    const [data, setData] = useState<CycleTimeData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -11,7 +11,7 @@ export const usePRData=(selectedTeam: string, projectId: string, year: number)=>
         const fetchData = async () => {
           try {
             setLoading(true);
-            const response = await getPRClosedData(projectId,selectedTeam, year);
+            const response = await getCycleTimeData(projectId,selectedTeam, year);
             setData(response);
             setError(null);
           } catch (err) {

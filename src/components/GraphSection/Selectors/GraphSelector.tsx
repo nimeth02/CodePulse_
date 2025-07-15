@@ -1,8 +1,9 @@
 import React from "react";
 import { GraphType } from "../Types/GraphType";
 import { tabs } from '../Constants/graphConstants'
+import { GraphSelectorProps } from '../Types/SelectorTypes';
 
-const GraphSelector =({activeTab,setActiveTab}:{activeTab:GraphType,setActiveTab:(activeTab:GraphType)=> void})=>{
+const GraphSelector =({activeTab,setActiveTab}: GraphSelectorProps)=>{
     console.log("Graph selector")
     return (
         <div className="graph-tabs">
