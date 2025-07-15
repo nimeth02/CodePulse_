@@ -12,25 +12,40 @@ export const TeamConfigurations: React.FC<TeamConfigurationsProps> = ({
   console.log("Team Configurations");
   const [teamName, setTeamName] = useState("");
   const [teamDescription, setTeamDescription] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const {
     teams,
-    selectedTeam,
-    availableUsers,
     teamMembers,
     nonTeamMembers,
-    selectedUsers,
     isLoading,
     error,
-    handleTeamChange,
-    handleUserSelect,
     handleAddToTeam,
     handleCreateTeam: createTeam,
-  } = useTeamConfiguration(projectId);
+  } = useTeamConfiguration(
+    projectId,
+    selectedTeam,
+    selectedUsers,
+    setSelectedUsers
+  );
 
   const handleCreateTeam = async () => {
     await createTeam(teamName, teamDescription);
     setTeamName("");
     setTeamDescription("");
+  };
+
+  const handleTeamChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTeam(event.target.value);
+  };
+
+  const handleUserSelect = (userId: string) => {
+    console.log(userId);
+    setSelectedUsers((prev) =>
+      prev.includes(userId)
+        ? prev.filter((id) => id !== userId)
+        : [...prev, userId]
+    );
   };
 
   if (isLoading && teams.length === 0) {

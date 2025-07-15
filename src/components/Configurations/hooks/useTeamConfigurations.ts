@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
-import { Team, TeamMember, User } from "../types";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   TeamConfigurationService,
   TeamData,
   TeamUserData,
 } from "../../../services/TeamConfigurationService";
 
-export const useTeamConfiguration = (projectId: string) => {
+export const useTeamConfiguration = (
+  projectId: string,
+  selectedTeam: string,
+  selectedUsers: string[],
+  setSelectedUsers: Dispatch<SetStateAction<string[]>>
+) => {
   const [teams, setTeams] = useState<TeamData[]>([]);
   const [availableUsers, setAvailableUsers] = useState<TeamUserData[]>([]);
-  const [selectedTeam, setSelectedTeam] = useState<string>("");
   const [teamMembers, setTeamMembers] = useState<TeamUserData[]>([]);
   const [nonTeamMembers, setNonTeamMembers] = useState<TeamUserData[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -80,19 +82,6 @@ export const useTeamConfiguration = (projectId: string) => {
     }
   };
 
-  const handleTeamChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTeam(event.target.value);
-  };
-
-  const handleUserSelect = (userId: string) => {
-    console.log(userId);
-    setSelectedUsers((prev) =>
-      prev.includes(userId)
-        ? prev.filter((id) => id !== userId)
-        : [...prev, userId]
-    );
-  };
-
   const handleCreateTeam = async (
     teamName: string,
     description: string = ""
@@ -144,15 +133,10 @@ export const useTeamConfiguration = (projectId: string) => {
 
   return {
     teams,
-    selectedTeam,
-    availableUsers,
     teamMembers,
     nonTeamMembers,
-    selectedUsers,
     isLoading,
     error,
-    handleTeamChange,
-    handleUserSelect,
     handleAddToTeam,
     handleCreateTeam,
   };
