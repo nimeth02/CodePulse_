@@ -6,10 +6,9 @@ import { useTeamData } from "../hooks/useTeamData";
 const TeamSelector = ({
   selectedTeam,
   setSelectedTeam,
-  projectId,
 }: TeamSelectorProps) => {
   console.log("Team selector");
-  const { teamData, error, loading } = useTeamData(projectId);
+  const { teamData, error, loading } = useTeamData();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const teamId = e.target.value;

@@ -19,12 +19,10 @@ import { CycleaTimeGraph_Legend } from "../Constants/graphLegends";
 
 const CycleTimeGraph: React.FC<GraphProps> = ({
   selectedTeam,
-  projectId,
   year,
 }) => {
   console.log("Cycle Time Graph");
   const { error, loading, data } = useCycleTimeData(
-    projectId,
     selectedTeam.teamId,
     year
   );

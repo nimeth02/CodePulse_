@@ -22,12 +22,12 @@ const GraphSection = ({projectId}:{projectId:string}) => {
         </div>
         <div className='selecters'>
         <TimeSelector selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
-        <TeamSelector selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} projectId={projectId}/>
+        <TeamSelector selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} />
         </div>
 
       </div>
       <div className="graph-placeholder">
-        <GraphContainer type={activeTab} projectId={projectId} selectedTeam={selectedTeam} selectedTime={selectedTime}/>
+        <GraphContainer type={activeTab} selectedTeam={selectedTeam} selectedTime={selectedTime}/>
       </div>
     </div>
   );

@@ -18,12 +18,10 @@ import { GraphProps } from "../Types/GraphType";
 
 const ClosedGraph: React.FC<GraphProps> = ({
   selectedTeam,
-  projectId,
   year,
 }) => {
   console.log("Closed Graph");
   const { error, loading, data } = usePRClosedData(
-    projectId,
     selectedTeam.teamId,
     year
   );

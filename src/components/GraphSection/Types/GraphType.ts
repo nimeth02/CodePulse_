@@ -4,13 +4,11 @@ export type GraphType = 'closed' | 'closedComparison' | 'cycleTime'|'prActivity'
 
 export interface GraphContainerProps {
         type: GraphType,
-        projectId:string,
         selectedTeam: TeamData,
         selectedTime:number
   }
 
  export  interface GraphProps {
     selectedTeam: TeamData;
-    projectId: string;
     year: number;
   }  

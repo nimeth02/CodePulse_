@@ -11,7 +11,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     useEffect(()=>{
         const fetchData=async()=>{
-            const projectResponse= await getProjectData("6C0F9FBA-F6A4-44E6-9C52-10B251C1D777")
+            const projectResponse= await getProjectData("C34D1F5A-6EB9-4539-A824-3F07F301E153")
             setProject(projectResponse)
         }
         fetchData()

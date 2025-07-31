@@ -61,11 +61,10 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
 
 const ClosedComparisonGraph: React.FC<GraphProps> = ({
   selectedTeam,
-  projectId,
   year,
 }) => {
   console.log("Closed Comparison Graph");
-  const { error, loading, data } = usePRClosedComparisonData(projectId, year);
+  const { error, loading, data } = usePRClosedComparisonData( year);
 
   const getBarKeys = (data: any) => {
     const keys = new Set();

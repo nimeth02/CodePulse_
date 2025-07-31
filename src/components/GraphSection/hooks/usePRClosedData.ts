@@ -1,30 +1,38 @@
 import { useEffect, useState } from "react";
-import { getPRClosedData, PRClosedData } from "../../../services/PRClosedService";
+import {
+  getPRClosedData,
+  PRClosedData,
+} from "../../../services/PRClosedService";
+import { useProject } from "context/ProjectContext";
 
-export const usePRClosedData=( projectId: string,selectedTeam: string, year: number)=>
-{
-    const [data, setData] = useState<PRClosedData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export const usePRClosedData = (
+  selectedTeam: string,
+  year: number
+) => {
+  const { project } = useProject();
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            setLoading(true);
-            const response = await getPRClosedData(projectId,selectedTeam, year);
-            setData(response);
-            setError(null);
-          } catch (err) {
-            setError('Failed to fetch PR data');
-            console.error(err);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchData();
-      }, [projectId, year,selectedTeam]);
+  const projectId = project?.projectId || "";
+  const [data, setData] = useState<PRClosedData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-      return {error,loading,data}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await getPRClosedData(projectId, selectedTeam, year);
+        setData(response);
+        setError(null);
+      } catch (err) {
+        setError("Failed to fetch PR data");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-}
+    fetchData();
+  }, [projectId, year, selectedTeam]);
+
+  return { error, loading, data };
+};

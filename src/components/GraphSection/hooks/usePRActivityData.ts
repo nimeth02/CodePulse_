@@ -5,12 +5,15 @@ import {
   prActivityData,
   UserPRActivityData,
 } from "../../../services/PRActivityService";
+import { useProject } from "context/ProjectContext";
 
 export const usePRActivityData = (
-  projectId: string,
   selectedTeam: string,
   year: number
 ) => {
+  const {project}=useProject()
+
+  const projectId=project?.projectId || ""
   const [data, setData] = useState<prActivityData[]>([]);
   const [devTableData, setDevTableData] = useState<UserPRActivityData[]>([]);
   const [loading, setLoading] = useState(true);

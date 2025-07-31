@@ -1,7 +1,11 @@
+import { useProject } from "context/ProjectContext";
 import { getCycleTimeComparisonData ,TransformedDataItem} from "../../../services/CycleTimeComparisonService";
 import { useEffect, useState } from "react";
 
-export const useCycleTimeComparisonData=(projectId: string, year: number)=>{
+export const useCycleTimeComparisonData=( year: number)=>{
+  const {project}=useProject()
+
+  const projectId=project?.projectId || ""
     const [data, setData] = useState<TransformedDataItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

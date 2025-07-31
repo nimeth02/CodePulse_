@@ -28,14 +28,12 @@ const renderCustomizedLabel = ({ cx, cy }: any) => {
 
 const PRActivityGraph: React.FC<GraphProps> = ({
   selectedTeam,
-  projectId,
   year,
 }) => {
   console.log("PR Activity Graph");
   const {project}=useProject()
 
   const { error, loading, data, devTableData } = usePRActivityData(
-    projectId,
     selectedTeam.teamId,
     year
   );

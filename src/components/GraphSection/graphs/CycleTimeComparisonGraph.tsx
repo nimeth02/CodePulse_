@@ -63,12 +63,11 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
 
 const CycleTimeComparisonGraph: React.FC<GraphProps> = ({
   selectedTeam,
-  projectId,
   year,
 }) => {
   console.log("Closed Comparison Graph");
 
-  const { error, loading, data } = useCycleTimeComparisonData(projectId, year);
+  const { error, loading, data } = useCycleTimeComparisonData( year);
 
   const getLineKeys = (data: any[]) => {
     const keys = new Set<string>();

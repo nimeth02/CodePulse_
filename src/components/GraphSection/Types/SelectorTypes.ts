@@ -9,7 +9,6 @@ export type GraphSelectorProps = {
 export type TeamSelectorProps = {
   selectedTeam: TeamData;
   setSelectedTeam: (selectedTeam: TeamData) => void;
-  projectId: string;
 };
 
 export type TimeSelectorProps = {

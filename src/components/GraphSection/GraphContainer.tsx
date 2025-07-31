@@ -10,7 +10,6 @@ import React from "react";
 
 const GraphContainer = ({
   type,
-  projectId,
   selectedTeam,
   selectedTime,
 }: GraphContainerProps) => {
@@ -21,7 +20,6 @@ const GraphContainer = ({
         return (
           <ClosedGraph
             selectedTeam={selectedTeam}
-            projectId={projectId}
             year={selectedTime}
           />
         );
@@ -29,7 +27,6 @@ const GraphContainer = ({
         return (
           <ClosedComparisonGraph
             selectedTeam={selectedTeam}
-            projectId={projectId}
             year={selectedTime}
           />
         );
@@ -37,7 +34,6 @@ const GraphContainer = ({
         return (
           <CycleTimeGraph
             selectedTeam={selectedTeam}
-            projectId={projectId}
             year={selectedTime}
           />
         );
@@ -45,7 +41,6 @@ const GraphContainer = ({
         return (
           <CycleTimeComparisonGraph
             selectedTeam={selectedTeam}
-            projectId={projectId}
             year={selectedTime}
           />
         );
@@ -53,7 +48,6 @@ const GraphContainer = ({
         return (
           <PRActivityGraph
             selectedTeam={selectedTeam}
-            projectId={projectId}
             year={selectedTime}
           />
         );
