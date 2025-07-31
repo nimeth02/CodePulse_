@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import "./TeamConfigurations.scss";
 import { useTeamConfiguration } from "./hooks/useTeamConfigurations";
+import { TextField } from "@mui/material";
 
-interface TeamConfigurationsProps {
-  projectId: string;
-}
 
-export const TeamConfigurations: React.FC<TeamConfigurationsProps> = ({
-  projectId,
-}) => {
+
+export const TeamConfigurations: React.FC = () => {
   console.log("Team Configurations");
   const [teamName, setTeamName] = useState("");
   const [teamDescription, setTeamDescription] = useState("");
@@ -23,7 +20,6 @@ export const TeamConfigurations: React.FC<TeamConfigurationsProps> = ({
     handleAddToTeam,
     handleCreateTeam: createTeam,
   } = useTeamConfiguration(
-    projectId,
     selectedTeam,
     selectedUsers,
     setSelectedUsers
@@ -127,25 +123,23 @@ export const TeamConfigurations: React.FC<TeamConfigurationsProps> = ({
         <div className="create-team-container">
           <h2>Create Team</h2>
           <div className="form-container">
-            <div className="input-group">
-              <label htmlFor="teamName">Team Name</label>
-              <input
-                type="text"
-                id="teamName"
-                placeholder="Enter team name"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="teamDescription">Description</label>
-              <textarea
-                id="teamDescription"
-                placeholder="Enter team description"
-                value={teamDescription}
-                onChange={(e) => setTeamDescription(e.target.value)}
-              />
-            </div>
+            <TextField
+              label="Team Name"
+              variant="outlined"
+              fullWidth
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+            />
+            <TextField
+              label="Description"
+              variant="outlined"
+              multiline
+              rows={4}
+              fullWidth
+              value={teamDescription}
+              onChange={(e) => setTeamDescription(e.target.value)}
+            />
+
             <button
               className="create-button"
               onClick={handleCreateTeam}

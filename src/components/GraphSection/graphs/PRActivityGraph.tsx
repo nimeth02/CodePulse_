@@ -7,8 +7,12 @@ import { GraphProps } from "../Types/GraphType";
 import { PRActivityGraph_Legend } from "../Constants/graphLegends";
 import CustomGraphLegend from "../Components/CustomGraphLegend";
 import { usePRActivityData } from "../hooks/usePRActivityData";
+import { useProject } from "../../../context/ProjectContext";
+
 
 const renderCustomizedLabel = ({ cx, cy }: any) => {
+
+
   return (
     <text
       x={cx}
@@ -28,6 +32,7 @@ const PRActivityGraph: React.FC<GraphProps> = ({
   year,
 }) => {
   console.log("PR Activity Graph");
+  const {project}=useProject()
 
   const { error, loading, data, devTableData } = usePRActivityData(
     projectId,
@@ -85,9 +90,13 @@ const PRActivityGraph: React.FC<GraphProps> = ({
             <tr>
               <th></th>
               <th>Merged</th>
-              <th>Not Merged</th>
-              <th>Total Commits</th>
-              <th>Total Changed lines</th>
+              <th>Abondened</th>
+              {project?.providerType == "github" && (
+                <>
+                  <th>Total Commits</th>
+                  <th>Total Changed lines</th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -100,17 +109,30 @@ const PRActivityGraph: React.FC<GraphProps> = ({
                 <td className="not-merged" style={{ background: "#00E6C3" }}>
                   {dev.notMergedCount}{" "}
                 </td>
-                <td className="Total Commits" style={{ background: "#FFC400" }}>
-                  {dev.totalCommits}{" "}
-                </td>
-                <td className="changed lines">
-                  <div className="Additions" style={{ background: "#2CBA3C" }}>
-                    +{dev.totalAdditions}{" "}
-                  </div>
-                  <div className="Deletions" style={{ background: "#B71C1C" }}>
-                    -{dev.totalDeletions}{" "}
-                  </div>
-                </td>
+                {project?.providerType == "github" && (
+                  <>
+                    <td
+                      className="Total Commits"
+                      style={{ background: "#FFC400" }}
+                    >
+                      {dev.totalCommits}{" "}
+                    </td>
+                    <td className="changed lines">
+                      <div
+                        className="Additions"
+                        style={{ background: "#2CBA3C" }}
+                      >
+                        +{dev.totalAdditions}{" "}
+                      </div>
+                      <div
+                        className="Deletions"
+                        style={{ background: "#B71C1C" }}
+                      >
+                        -{dev.totalDeletions}{" "}
+                      </div>
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>

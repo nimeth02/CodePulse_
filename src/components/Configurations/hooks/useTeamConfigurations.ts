@@ -4,19 +4,22 @@ import {
   TeamData,
   TeamUserData,
 } from "../../../services/TeamConfigurationService";
+import { useProject } from "context/ProjectContext";
 
 export const useTeamConfiguration = (
-  projectId: string,
   selectedTeam: string,
   selectedUsers: string[],
   setSelectedUsers: Dispatch<SetStateAction<string[]>>
 ) => {
+  const {project}=useProject()
   const [teams, setTeams] = useState<TeamData[]>([]);
   const [availableUsers, setAvailableUsers] = useState<TeamUserData[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamUserData[]>([]);
   const [nonTeamMembers, setNonTeamMembers] = useState<TeamUserData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const projectId=project?.projectId || ""
 
   useEffect(() => {
     loadTeams();
