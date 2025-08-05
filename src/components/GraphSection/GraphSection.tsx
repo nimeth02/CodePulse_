@@ -6,10 +6,10 @@ import TeamSelector from './Selectors/TeamSelector';
 import GraphSelector from './Selectors/GraphSelector';
 import TimeSelector from './Selectors/TimeSelector';
 
-const GraphSection = ({projectId}:{projectId:string}) => {
+const GraphSection = () => {
   console.log("Graph section")
    //87199129-F8E0-472F-A7EC-E4A3C66D6FE2 //1ED1BE08-1323-4D00-8E09-8A5765E9F5A8
-  const { activeTab, setActiveTab, selectedTeam, setSelectedTeam,selectedTime, setSelectedTime  } = useGraphSection(projectId);
+  const { activeTab, setActiveTab, selectedTeam, setSelectedTeam,selectedTime, setSelectedTime  } = useGraphSection();
 
 
   
@@ -24,7 +24,6 @@ const GraphSection = ({projectId}:{projectId:string}) => {
         <TimeSelector selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
         <TeamSelector selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} />
         </div>
-
       </div>
       <div className="graph-placeholder">
         <GraphContainer type={activeTab} selectedTeam={selectedTeam} selectedTime={selectedTime}/>

@@ -117,13 +117,13 @@ const PRActivityGraph: React.FC<GraphProps> = ({
                     </td>
                     <td className="changed lines">
                       <div
-                        className="Additions"
+                        className="additions"
                         style={{ background: "#2CBA3C" }}
                       >
                         +{dev.totalAdditions}{" "}
                       </div>
                       <div
-                        className="Deletions"
+                        className="deletions"
                         style={{ background: "#B71C1C" }}
                       >
                         -{dev.totalDeletions}{" "}

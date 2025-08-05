@@ -1,24 +1,37 @@
 import { getProjectData, projectData } from "../services/ProjectService";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-const ProjectContext = createContext<{
-    project: projectData | null;
-    setProject: React.Dispatch<React.SetStateAction<projectData | null>>;
-  } | undefined>(undefined);
+const ProjectContext = createContext<
+  | {
+      project: projectData;
+      setProject: React.Dispatch<React.SetStateAction<projectData>>;
+    }
+  | undefined
+>(undefined);
 
-export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [project, setProject] = useState<projectData | null>(null);
+const initialProject: projectData = {
+  projectId: "6c0f9fba-f6a4-44e6-9c52-10b251c1d777",
+  projectName: "",
+  projectCode: "",
+  providerType: "",
+  projectCreatedAt: "",
+};
 
-    useEffect(()=>{
-        const fetchData=async()=>{
-            const projectResponse= await getProjectData("C34D1F5A-6EB9-4539-A824-3F07F301E153")
-            setProject(projectResponse)
-        }
-        fetchData()
-    },[])
+export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [project, setProject] = useState<projectData>(initialProject);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const projectResponse = await getProjectData(project.projectId);
+      setProject(projectResponse);
+    };
+    fetchData();
+  }, []);
 
   return (
-    <ProjectContext.Provider value={{ project, setProject}}>
+    <ProjectContext.Provider value={{ project, setProject }}>
       {children}
     </ProjectContext.Provider>
   );

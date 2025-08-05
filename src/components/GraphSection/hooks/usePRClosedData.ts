@@ -11,7 +11,7 @@ export const usePRClosedData = (
 ) => {
   const { project } = useProject();
 
-  const projectId = project?.projectId || "";
+  const projectId =project?.projectId;
   const [data, setData] = useState<PRClosedData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,6 +20,10 @@ export const usePRClosedData = (
     const fetchData = async () => {
       try {
         setLoading(true);
+        if(!projectId){
+          setError("Project ID is not set");
+          return;
+        }
         const response = await getPRClosedData(projectId, selectedTeam, year);
         setData(response);
         setError(null);

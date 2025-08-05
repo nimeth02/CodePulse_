@@ -1,6 +1,8 @@
+@import "../../../theme/styles/variables";
+
 .graph-content {
   padding: 20px;
-  background-color: #ffffff;
+  background-color: $background-color;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   min-height: 300px;
@@ -8,13 +10,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #666;
+  color: $font-color;
   font-size: 16px;
 }
 
 h3 {
   margin: 0 0 16px 0;
-  color: #333;
+  color: $font-color;
   font-size: 18px;
   font-weight: 600;
 }
@@ -80,12 +82,19 @@ h3 {
   width: 100%;
   border-collapse: separate;
   border-spacing: 8px;
+
+  .additions
+   {
+    border-radius: 4px 4px 0 0;
+  }
+
+  .deletions{
+    border-radius:0 0 4px 4px;
+      }
 }
 .pr-activity-table th {
   text-align: center;
-  font-size: 22px;
-  font-weight: 500;
-  color: #444;
+  @include font-style(sub-heading);
 }
 .pr-activity-table th:first-child,
 .pr-activity-table td:first-child {
@@ -94,18 +103,9 @@ h3 {
 }
 .pr-activity-table td {
   border-radius: 4px;
+  padding: 8px;
   text-align: center;
-  font-weight: 500;
-}
-.pr-activity-table .merged,
-.not-merged,
-.name {
-  color: #111;
-  font-size: 32px;
-}
-.pr-activity-table {
-  color: #fff;
-  font-size: 28px;
+  @include font-style(sub-heading);
 }
 
 .cycle-time-description-container {
@@ -159,4 +159,29 @@ h3 {
 .cycle-time-tips li {
   margin-bottom: 6px;
   list-style: disc;
+}
+
+.custom-graph-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      // background will be set inline via style prop
+    }
+
+    .legend-label {
+      @include font-style(body);
+    }
+  }
 }

@@ -1,26 +1,17 @@
 import React from "react";
 import { GraphColor } from "../Types/GraphColor";
+import "../Graphs/GraphStyles.scss";
 
 const CustomGraphLegend = ({ colors }: { colors: GraphColor[] }) => {
-  console.log("custom legend");
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
+    <div className="custom-graph-legend">
       {colors.map((col: any, key: any) => (
-        <div
-          key={key}
-          style={{ display: "flex", alignItems: "center", marginRight: 24 }}
-        >
+        <div className="legend-item" key={key}>
           <span
-            style={{
-              width: 16,
-              height: 16,
-              background: col.color,
-              borderRadius: "50%",
-              display: "inline-block",
-              marginRight: 8,
-            }}
+            className="legend-color"
+            style={{ background: col.color }}
           />
-          <span style={{ color: "#222", fontWeight: 500 }}>{col.value}</span>
+          <span className="legend-label">{col.value}</span>
         </div>
       ))}
     </div>

@@ -51,7 +51,7 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
                 marginRight: 8,
               }}
             />
-            <span style={{ color: "#222", fontWeight: 500 }}>
+            <span style={{ color: "#2c3e50", fontWeight: 400,fontSize:"14px" }}>
               {`${displayName}`}
             </span>
           </div>

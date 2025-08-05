@@ -1,10 +1,11 @@
+@import '../../theme/styles/variables';
 .layout {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-color: $background-color;
   }
   
   

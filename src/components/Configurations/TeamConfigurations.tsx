@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./TeamConfigurations.scss";
 import { useTeamConfiguration } from "./hooks/useTeamConfigurations";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 
 
@@ -54,7 +54,7 @@ export const TeamConfigurations: React.FC = () => {
 
   return (
     <div className="team-configurations">
-      <h2>Team Configurations</h2>
+      <div className="team-configurations-heading">Team Configurations</div>
       <div className="configurations-content">
         <div className="left-panel">
           <div className="team-selector">
@@ -75,7 +75,7 @@ export const TeamConfigurations: React.FC = () => {
 
           {selectedTeam && (
             <div className="team-members">
-              <h3>Team Members</h3>
+              <div className="team-members-heading">Team Members</div>
               <div className="members-list">
                 {Array.isArray(teamMembers) &&
                   teamMembers.map((member) => (
@@ -89,7 +89,7 @@ export const TeamConfigurations: React.FC = () => {
         </div>
 
         <div className="right-panel">
-          <h3>Available Users</h3>
+          <div className="available-users-heading">Available Users</div>
           <div className="users-list">
             {Array.isArray(nonTeamMembers) &&
               nonTeamMembers.map((user) => (
@@ -101,6 +101,7 @@ export const TeamConfigurations: React.FC = () => {
                 >
                   <input
                     type="checkbox"
+                    className="red-checkbox"
                     checked={selectedUsers.includes(user.userId)}
                     onChange={() => handleUserSelect(user.userId)}
                   />
@@ -109,19 +110,19 @@ export const TeamConfigurations: React.FC = () => {
               ))}
           </div>
           {selectedUsers.length > 0 && (
-            <button
+            <Button
               className="add-to-team-btn"
               onClick={handleAddToTeam}
               disabled={isLoading}
             >
               {isLoading ? "Adding..." : "Add to Team"}
-            </button>
+            </Button>
           )}
         </div>
       </div>
       <div>
         <div className="create-team-container">
-          <h2>Create Team</h2>
+          <div className="create-team-heading">Create Team</div>
           <div className="form-container">
             <TextField
               label="Team Name"
@@ -140,13 +141,13 @@ export const TeamConfigurations: React.FC = () => {
               onChange={(e) => setTeamDescription(e.target.value)}
             />
 
-            <button
-              className="create-button"
+            <Button
+              className="create-btn"
               onClick={handleCreateTeam}
               disabled={isLoading || !teamName.trim()}
             >
               {isLoading ? "Creating..." : "Create Team"}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

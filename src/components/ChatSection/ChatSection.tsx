@@ -1,5 +1,6 @@
 import React from "react";
 import "./ChatSection.scss";
+import { Button, TextField } from "@mui/material";
 
 const ChatSection: React.FC = () => {
   console.log("chat section");
@@ -10,8 +11,16 @@ const ChatSection: React.FC = () => {
         <p>Chat messages will appear here</p>
       </div>
       <div className="chatbot-input">
-        <input type="text" placeholder="Type your message..." />
-        <button>Send</button>
+        <TextField
+          label="Message"
+          variant="outlined"
+          multiline
+          rows={1}
+          fullWidth
+        />
+        <Button variant="contained"  className="send-button">
+          Send
+        </Button>
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
+@import "../../theme/styles/variables";
+
 .graph-area {
   flex: 1;
   padding: 16px;
-  background-color: #ffffff;
+  background-color: $background-color;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
@@ -9,22 +11,20 @@
   gap: 16px;
 
   .graph-titile {
-    font-size: 28px;
-    color: #2c3e50;
-    font-weight: 700;
+    @include font-style(heading);
     margin: 0;
     padding: 16px 0;
     text-align: center;
     position: relative;
     width: 100%;
     letter-spacing: -0.5px;
-    
-
   }
 
   .graph-header {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    row-gap: 8px; 
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
@@ -32,17 +32,18 @@
 
   .graph-tabs {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: 8px;
     gap: 11px;
 
     .tab-button {
       padding: 8px 24px;
       border: 1px solid #e0e0e0;
-      background-color: #ffffff;
+      background-color: $background-color;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      color: #666;
+      @include font-style(body);
+      font-weight: 600;
       transition: all 0.2s ease;
       min-width: 120px;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -53,27 +54,26 @@
       }
 
       &.active {
-        background-color: #007bff;
-        color: white;
-        border-color: #007bff;
+        background-color: $primary-color;
+        color: $font-color-secondary;
+        border-color: $primary-color;
         box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
       }
     }
   }
 
-  .selecters{
-    display:flex;
-gap:5px;
+  .selecters {
+    display: flex;
+    gap: 5px;
   }
 
-  .team-select,.time-select {
+  .team-select,
+  .time-select {
     padding: 10px 16px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid $secondary-color;
     border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    background-color: white;
+    @include font-style(body);
+    background-color: $background-color;
     cursor: pointer;
     min-width: 140px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -86,27 +86,27 @@ gap:5px;
 
     &:focus {
       outline: none;
-      border-color: #007bff;
+      border-color: $primary-color;
       box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
     }
 
     option {
       padding: 8px;
+      border-radius: 6px;
     }
   }
 
   .graph-placeholder {
     width: 100%;
-    background-color: #ffffff;
+    background-color: $background-color;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    color: #666;
-    font-size: 16px;
+    @include font-style(body);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-    overflow-x:auto;
+    overflow-x: auto;
     overflow-y: scroll;
   }
-} 
+}
