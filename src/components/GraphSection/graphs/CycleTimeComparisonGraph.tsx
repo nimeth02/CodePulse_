@@ -1,63 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { BarChart, CartesianGrid, ComposedChart, Line, Tooltip, XAxis, YAxis } from 'recharts';
-import { Bar } from 'recharts';
-import { ResponsiveContainer } from 'recharts';
-import { getPRComparisonData, PRComparisonData } from '../../../services/PRClosedComparisonService';
-import GraphLoading from '../Components/GraphLoading';
-import GraphError from '../Components/GraphError';
-import { TeamData } from '../../../services/ProjectTeams';
-import { getCycleTimeComparisonData } from '../../../services/CycleTimeComparisonService';
-interface CycleTimeComparisonGraphProps {
-  selectedTeam: TeamData;
-  projectId: string;
-  year: number;
-}
+import React, { useEffect, useState } from "react";
+import {
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { ResponsiveContainer } from "recharts";
+import GraphLoading from "../Components/GraphLoading";
+import GraphError from "../Components/GraphError";
+import { GraphProps } from "../Types/GraphType";
+import { ComparisonBaseColors } from "../Constants/graphConstants";
+import { useCycleTimeComparisonData } from "../hooks/useCycleTimeComparisonData";
 
-interface graphData {
-  name: string;
-  
-}
-
-
-const COLORS = {
-  Organization: '#2979FF',
-  SriLankan: '#00B8D9',
-  Sweden: '#FFC400',
-};
-
-const CustomLegend = ({ barKeys, data }: { barKeys: any[], data: any[] }) => {
-  // Count occurrences of each key in the data
-  const getCount = (key: string) => {
-    return data.reduce((sum, item) => sum + (item[key] || 0), 0);
-  };
-
+const CustomLegend = ({ barKeys, data }: { barKeys: any[]; data: any[] }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 16,
+        flexWrap: "wrap",
+      }}
+    >
       {barKeys.map((key: string, index: number) => {
         // Clean up the key name for display
-        const displayName = key.replace(/averageCycleTimeInDays$/, '').replace(/_/g, ' ');
-        
+        const displayName = key
+          .replace(/averageCycleTimeInDays$/, "")
+          .replace(/_/g, " ");
+
         return (
-          <div 
+          <div
             key={key}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            style={{
+              display: "flex",
+              alignItems: "center",
               marginRight: 24,
-              marginBottom: 8 
+              marginBottom: 8,
             }}
           >
-            <span 
-              style={{ 
-                width: 16, 
-                height: 16, 
-                background:  baseColors[index % baseColors.length] ,
-                borderRadius: '50%', 
-                display: 'inline-block', 
-                marginRight: 8 
-              }} 
+            <span
+              style={{
+                width: 16,
+                height: 16,
+                background:
+                  ComparisonBaseColors[index % ComparisonBaseColors.length],
+                borderRadius: "50%",
+                display: "inline-block",
+                marginRight: 8,
+              }}
             />
-            <span style={{ color: '#222', fontWeight: 500 }}>
+            <span style={{ color: "#2c3e50", fontWeight: 400,fontSize:"14px" }}>
               {`${displayName}`}
             </span>
           </div>
@@ -67,67 +61,19 @@ const CustomLegend = ({ barKeys, data }: { barKeys: any[], data: any[] }) => {
   );
 };
 
-  // Base colors (extendable list)
-  const baseColors = [
-    '#8dd1e1', // Cyan
-    '#82ca9d', // Green
-    '#ffc658', // Yellow 
-    '#8e4585', // Plum
-    '#ff4d4f', // Red
-    '#83a6ed', // Blue
-    '#a4de6c', // Light green
-    '#d0ed57', // Lime
-    '#8884d8', // Purple
-    '#ff7300', // Orange
-  ];
+const CycleTimeComparisonGraph: React.FC<GraphProps> = ({
+  selectedTeam,
+  year,
+}) => {
+  console.log("Closed Comparison Graph");
 
- 
-
-
-
-const CycleTimeComparisonGraph: React.FC<CycleTimeComparisonGraphProps> = ({ selectedTeam ,projectId, year}) => {
-  console.log("Closed Comparison Graph")
-  const [data, setData] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await getCycleTimeComparisonData(projectId,year);
-        console.log(response);
-    
-        if (!Array.isArray(response)) {
-          throw new Error('API response is not an array');
-        }
-        const transformedData = response.map(({ month, teams }) => {
-          const result: { [key: string]: number | string } = { name: month };
-          teams.forEach((team) => {
-            result[`${team.name}_averageCycleTimeInDays`] = team.averageCycleTimeInDays;
-          });
-          return result;
-        });
-        console.log(transformedData);
-        
-        setData(transformedData);
-        setError(null);
-      } catch (err) {
-        setError('Failed to fetch PR data');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [projectId, year]);
+  const { error, loading, data } = useCycleTimeComparisonData( year);
 
   const getLineKeys = (data: any[]) => {
     const keys = new Set<string>();
     data.forEach((item) => {
       Object.keys(item).forEach((key) => {
-        if (key !== 'name') {
+        if (key !== "name") {
           keys.add(key);
         }
       });
@@ -137,16 +83,14 @@ const CycleTimeComparisonGraph: React.FC<CycleTimeComparisonGraphProps> = ({ sel
 
   const lineKeys = getLineKeys(data);
 
- 
   console.log(lineKeys);
-  
 
   if (loading) {
-    return <GraphLoading />
+    return <GraphLoading />;
   }
 
   if (error) {
-    return <GraphError />
+    return <GraphError />;
   }
 
   return (
@@ -166,17 +110,16 @@ const CycleTimeComparisonGraph: React.FC<CycleTimeComparisonGraphProps> = ({ sel
               key={key}
               type="monotone"
               dataKey={key}
-              stroke={baseColors[index % baseColors.length]}
+              stroke={ComparisonBaseColors[index % ComparisonBaseColors.length]}
               strokeWidth={3}
               dot={false}
             />
           ))}
-          
         </ComposedChart>
       </ResponsiveContainer>
-      <CustomLegend barKeys={lineKeys} data={data}/>
+      <CustomLegend barKeys={lineKeys} data={data} />
     </div>
   );
 };
 
-export default CycleTimeComparisonGraph; 
+export default CycleTimeComparisonGraph;

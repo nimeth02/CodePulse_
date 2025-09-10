@@ -1,29 +1,19 @@
-import { useEffect, useState } from "react";
-import { getTeamData, TeamData } from "../../../services/ProjectTeams";
+import { useQuery } from "@tanstack/react-query";
+import {
+  TeamConfigurationService,
+  TeamData,
+} from "../../../services/TeamConfigurationService";
+import { useProject } from "context/ProjectContext";
 
-export const useTeamData=( projectId: string)=>
-{
-    const [TeamData, setTeamData] = useState<TeamData[]>([{teamId:projectId , teamName: "Project"}]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            setLoading(true);
-            const response = await getTeamData(projectId);
-            setTeamData(t => [...t, ...response]);
-            setError(null);
-          } catch (err) {
-            setError('Failed to fetch Team data');
-            console.error(err);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchData();
-      }, [projectId]);
-
-      return {error,loading,TeamData}
+export const useTeams = () => {
+  const { project } = useProject();
+  
+  const projectId = project?.projectId || "";
+  return useQuery<TeamData[], Error>(
+    {
+      queryKey: ["teams", projectId], // unique cache key
+      queryFn: () => TeamConfigurationService.getTeams(projectId), // fetch function
+      enabled: !!projectId, // only fetch if projectId is valid
+    }
+  )
 }

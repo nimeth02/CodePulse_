@@ -1,8 +1,8 @@
-import axiosInstance from './axios';
+import axiosInstance from "./axios";
 
 export interface PRComparisonData {
   month: string;
-  teams:PRTeamComparisonData[]
+  teams: PRTeamComparisonData[];
 }
 
 export interface PRTeamComparisonData {
@@ -11,19 +11,20 @@ export interface PRTeamComparisonData {
   nonMerged: number;
 }
 
-export const getPRComparisonData = async (projectId: string, year: number): Promise<PRComparisonData[]> => {
-  try {
-    const response = await axiosInstance.get(`/PRClosedComparison`, {
-      params: {
-        projectId,
-        year
-      }
-    });
-    console.log(response.data);
-    
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching PR closed data:', error);
-    throw error;
-  }
-}; 
+export interface TransformedDataItem {
+  [key: string]: number | string; // Dynamic keys for team metrics
+}
+
+export const getPRComparisonData = async (
+  projectId: string,
+  year: number
+): Promise<PRComparisonData[]> => {
+  const response = await axiosInstance.get(`/pr-closed-comparison`, {
+    params: {
+      projectId,
+      year,
+    },
+  });
+
+  return response.data.data;
+};

@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5113/api',
+  baseURL: "http://localhost:8080/api",
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -26,16 +26,16 @@ axiosInstance.interceptors.response.use(
     // Handle errors here
     if (error.response) {
       // Server responded with error
-      console.error('API Error:', error.response.data);
+      console.error("API Error:", error.response.data);
     } else if (error.request) {
       // Request made but no response
-      console.error('Network Error:', error.request);
+      console.error("Network Error:", error.request);
     } else {
       // Error in request configuration
-      console.error('Request Error:', error.message);
+      console.error("Request Error:", error.message);
     }
     return Promise.reject(error);
   }
 );
 
-export default axiosInstance; 
+export default axiosInstance;

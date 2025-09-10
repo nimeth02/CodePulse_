@@ -1,236 +1,59 @@
-$nav-background-color: #283040;
-
-/* variants of background colors */
-$background-color: var(--main-background-color);
-$sub-background-color: var(--sub-background-color);
-$app-bar-background-color: #ffffff;
-$login-background-color: #ffffff;
-$form-background-color: #000000de;
-$card-background: #eae6df;
-$dark-gray: #807d75;
-$dark-gray-v2: #7d786b;
-$dark-gray-v3: #49402b;
-$gray: #a7a59d;
-$gray-v2: #919b9f;
-$gray-v3: #bdc3c7;
-$gray-v4: #546e7a;
-$light-gray: #cfcdc7;
-$light-gray-v1: #e4e5e7;
-$light-gray-v2: #edeae6;
-$light-gray-v3: #f7f5f2;
-$light-gray-v4: #ecf0f1;
-$backdrop-shade-color-login: rgb(175 173 173 / 80%);
-$backdrop-shade-color-generic: rgb(234 228 228 / 50%);
-
 /* font colors */
-$font-color1: #ffffff;
-$font-color2: #000000;
-$font-color3: #ff0000;
-$font-color4: #757575;
-$black-v1: #000000de;
-$white: #ffffff;
+$primary-color: #d4264f;
+$background-color: #ffffff;
+$secondary-color: #757575;
 
-/* Alert colors */
-$light-green: #c8fad4;
-$light-red: #ffe6ea;
-$light-blue: #d4f1ff;
-$light-blue-v2: #ebf2f5;
-$light-yellow: #fff799;
-$dark-green: #0f6649;
-$dark-red: #802938;
-$dark-blue: #1f4266;
-$dark-yellow: #804d19;
+$font-color: #2c3e50;
+$font-color-secondary: #ffffff;
 
-/* Colours for attachment icons */
-$color-doc: #281c7b;
-$color-ppt: #e65100;
-$color-excel: #2e7d32;
-$color-excel: #2e7d32;
-$color-image: #ffd600;
-$color-pdf: #b71c1c;
-$color-link: #00b0ff;
-$red: #ff5733;
-$red-v2: #e86464;
-$light-red-v2: #ef8888;
-$light-red-v3: #fcf7f6;
-$light-red-v4: #f7f0ee;
-$green: #2e7d32;
-$purple: #3357ff;
-$rose: #ff33a1;
-$yellow: #ffd600;
-$yellow-v2: #ffa500;
-$blue: #1e90ff;
-$blue-v2: #3ba4d1;
-$badge-yellow: #ffd356;
-$badge-green: #bbff9e;
-$badge-blue: #7cd5ff;
-$badge-red: #ad3115;
-$holiday-bg: red;
-$non-working-day-bg: #ffc108;
-$leave-day-bg: #11b411;
+$font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica,
+  Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 
-/* Other common colors */
-$text-field-border-color: #c8c4c4; // used in the login
-$theme-border-color: #0000001f; // table border color
-$calendar-picker-font-color: #000000dd;
-$menu-box-shadow:
-        rgba(14 30 37 / 12%) 0 2px 4px 0,
-        rgba(14 30 37 / 32%) 0 2px 16px 0;
+//   $font-family: Poppins, Mulish, sans-serif;
 
-/* Mapping color variables */
-// seems to be an issue here
-$primary-color: var(--primary-color);
-$secondary-color: var(--secondary-color);
-$nav-color: var(--nav-color);
-$nav-font-color: var(--side-nav-font-color);
-$nav-gradient-color1: var(--nav-gradient-color1);
-$nav-gradient-color2: var(--nav-gradient-color2);
-$action-icon-button-color: var(--action-icon-button-color);
-$add-new-button-color: var(--add-new-button-color);
-$add-new-button-color-shade: rgb(244 169 187);
-$tab-group-color: var(--tab-group-color);
-$slide-toggle-bar-color: var(--slide-toggle-bar-fcolor);
-$slide-toggle-thumb-color: var(--slide-toggle-thumb-color);
-$side-nav-hover-color: var(--side-nav-hover-color);
-$side-nav-selected-hover-color: var(--side-nav-selected-hover-color);
-$nav-selected-item-color: var(--nav-selected-item-color);
-$dashboard-settings-button-color: var(--dashboard-settings-button-color);
-$progress-bar-buffer: var(--progress-bar-buffer);
-$progress-bar-fill: var(--progress-bar-fill);
-$login-button: var(--login-button);
-$profile-cover-color: var(--profile-cover-color);
+$font-heading: 28px;
+$font-normal: 14px;
 
-/* Colours for recruitment inbox */
-$recruitment-inbox-color: var(--recruitment-inbox);
+$font-styles: (
+  heading: (
+    size: 28px,
+    weight: 700,
+    color: $font-color,
+    family: $font-family,
+  ),
+  sub-heading: (
+    size: 20px,
+    weight: 600,
+    color: $font-color,
+    family: $font-family,
+  ),
+  body: (
+    size: 14px,
+    weight: 400,
+    color: $font-color,
+    family: $font-family,
+  ),
+);
 
-/**
- Fonts
-*/
-$font-family: var(--font-family);
-$font-family-primary: "Poppins", sans-serif;
-$font-family-secondary: "Mulish", sans-serif;
-$font-weight-normal: 400;
-$font-weight-bold: 700;
-
-/**
-  Common dimensions
- */
-$spacing: 24px;
-$spacing-small: 18px;
-$elevation: 2;
-$border-radius: 12px;
-
-/**
-  Card
- */
-$card-header-height: 64px;
-$card-elevation: $elevation;
-$card-margin: 2%;
-
-/**
-  Toolbar
- */
-$toolbar-background: var(--toolbar-background);
-$nav-toolbar-background: var(--nav-toolbar-background);
-$toolbar-icon: var(--toolbar-icon);
-$toolbar-height: 64px;
-$toolbar-z-index: 500;
-$checkbox-color: var(--checkbox-color);
-$toolbar-button-width: 64px;
-$toolbar-elevation: $elevation;
-$form-color: var(--form);
-$search-indicator: var(--search-indicator);
-$comment-icon-color: var(--comment-icon-color);
-$help-tips-color: var(--help-tips);
-$widget-header-color: var(--widget-header-color);
-$widget-secondary-color: var(--widget-primary-text-color);
-$widget-primary-color: var(--widget-secondary-text-color);
-
-// all in one changes in UI
-
-// buttons
-$button-enable: #281c7b;
-$button-onclick: #4965b3;
-$button-disabled: #d1d1d1;
-$button-disabled: slategrey;
-$button-background-border-color1: #757575;
-$button-background-color1: #ffffff;
-
-// icon
-$icon-color: #281c7b;
-$icon-color2: #757575;
-
-// mat card
-$mat-card: rgb(240 240 240);
-
-// cancel color
-$button-cancel: #cd4141;
-
-/**
-  Table
-*/
-$mat-input-icon-size: 22px;
-$table-actions-button-size: 45px;
-
-/**
-  Dialog
-*/
-$dialog-actions-button-small: 35px;
-$dialog-actions-button-medium: 40px;
-
-// Epic Issue Colors for Backlog
-$epic-background-color: var(--epic-background-color);
-$epic-font-color: var(--epic-font-color);
-
-// TimeSheet Theme
-$time-sheet-holiday-color: var(--time-sheet-holiday-color);
-$time-sheet-leave-color: var(--time-sheet-leave-color);
-
-// drawer
-$drawer-width: 260px;
-
-/**
- Media query mixins for Mobile view
- */
-$media-xxs: "screen and (max-width: 399px)";
-@mixin media-xxs {
-  @media #{$media-xxs} {
-    @content;
-  }
+@mixin font-style($type) {
+  $style: map-get($font-styles, $type);
+  font-size: map-get($style, size);
+  font-weight: map-get($style, weight);
+  color: map-get($style, color);
+  font-family: map-get($style, family);
 }
 
-$media-xs: "screen and (min-width: 401px) and (max-width: 601px)";
-@mixin media-xs {
-  @media #{$media-xs} {
-    @content;
+.base-button {
+  background-color: $primary-color;
+  color: $font-color-secondary;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: none;
+  transition: background 0.5s, color 0.5s, border 0.5s;
+
+  &:active {
+    background-color: $background-color;
+    border: 1px solid $primary-color;
+    color: $primary-color;
   }
 }
-
-$media-sm: "screen and (min-width: 601px) and (max-width: 901px)";
-@mixin media-sm {
-  @media #{$media-sm} {
-    @content;
-  }
-}
-
-$media-md: "screen and (min-width: 901px) and (max-width: 1281px)";
-$media-lg: "screen and (min-width: 1281px) and (max-width: 1585px)";
-@mixin media-lg {
-  @media #{$media-lg} {
-    @content;
-  }
-}
-
-$media-xl: "screen and (min-width: 1585px) and (max-width: 1921px)";
-
-// Break points
-$xxs: 401px;
-$xs: 901px;
-$sm: 901px;
-$md: 1281px;
-$lg: 1585px;
-$xl: 1921px;
-
-// transitions
-$transition-duration: 0.225s;
-$transition-easing: cubic-bezier(0.4, 0, 0.2, 1);

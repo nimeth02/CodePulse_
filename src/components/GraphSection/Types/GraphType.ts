@@ -1,10 +1,15 @@
-import { TeamData } from "../../../services/ProjectTeams";
+import { TeamData } from "../../../services/TeamConfigurationService";
+
 
 export type GraphType = 'closed' | 'closedComparison' | 'cycleTime'|'prActivity'|'cycleTimeComparison';
 
-export interface GraphProps {
+export interface GraphContainerProps {
         type: GraphType,
-        projectId:string,
-    selectedTeam: TeamData,
-    selectedTime:number
+        selectedTeam: TeamData,
+        selectedTime:number
   }
+
+ export  interface GraphProps {
+    selectedTeam: TeamData;
+    year: number;
+  }  

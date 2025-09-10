@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import './GraphStyles.scss';
+import React from "react";
+import "./GraphStyles.scss";
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -9,66 +8,32 @@ import {
   Tooltip,
   ResponsiveContainer,
   ComposedChart,
-  Bar
-} from 'recharts';
-import { CycleTimeData, getCycleTimeData } from '../../../services/CycleTimeService';
-import GraphError from '../Components/GraphError';
-import GraphLoading from '../Components/GraphLoading';
-import { TeamData } from '../../../services/ProjectTeams';
-interface CycleTimeGraphProps {
-  selectedTeam: TeamData;
-  projectId: string;
-  year: number;
-}
+  Bar,
+} from "recharts";
+import GraphError from "../Components/GraphError";
+import GraphLoading from "../Components/GraphLoading";
+import { GraphProps } from "../Types/GraphType";
+import { useCycleTimeData } from "../hooks/useCycleTimeData";
+import CustomGraphLegend from "../Components/CustomGraphLegend";
+import { CycleaTimeGraph_Legend } from "../Constants/graphLegends";
 
-
-
-const COLORS = {
-  Organization: '#2979FF',
-  Count:'#FFC400'
-};
-
-const CustomLegend = () => (
-  <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
-    <div style={{ display: 'flex', alignItems: 'center', marginRight: 24 }}>
-      <span style={{ width: 16, height: 16, background: COLORS.Organization, borderRadius: '50%', display: 'inline-block', marginRight: 8 }} />
-      <span style={{ color: '#222', fontWeight: 500 }}>Organization</span>
-    </div>
-  </div>
-);
-
-const CycleTimeGraph: React.FC<CycleTimeGraphProps> = ({ selectedTeam,projectId, year  }) => {
-  console.log("Cycle Time Graph")
-  const [data, setData] = useState<CycleTimeData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await getCycleTimeData(projectId,selectedTeam.teamId, year);
-        setData(response);
-        setError(null);
-      } catch (err) {
-        setError('Failed to fetch PR data');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [projectId,selectedTeam, year]);
+const CycleTimeGraph: React.FC<GraphProps> = ({
+  selectedTeam,
+  year,
+}) => {
+  console.log("Cycle Time Graph");
+  const { error, loading, data } = useCycleTimeData(
+    selectedTeam.teamId,
+    year
+  );
 
   if (loading) {
-    return <GraphLoading />
+    return <GraphLoading />;
+  }
+  if (error) {
+    return <GraphError />;
   }
 
-  if (error) {
-    return <GraphError />
-  }
-  
   return (
     <div className="cycle-time-graph">
       <ResponsiveContainer width="100%" height={400}>
@@ -78,16 +43,46 @@ const CycleTimeGraph: React.FC<CycleTimeGraphProps> = ({ selectedTeam,projectId,
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" tick={{ fontSize: 16 }} />
-          <YAxis tick={{ fontSize: 16 }}  />
+          <YAxis tick={{ fontSize: 16 }} />
           <Tooltip />
-          
-          <Bar type="monotone" dataKey="count" fill={COLORS.Count} strokeWidth={3}  />
-          <Line type="monotone" dataKey="averageCycleTimeInDays" stroke={COLORS.Organization} strokeWidth={3} dot={false}/>
-       </ComposedChart>
+          <Bar
+            type="monotone"
+            dataKey="count"
+            fill={CycleaTimeGraph_Legend[1].color}
+            strokeWidth={3}
+          />
+          <Line
+            type="monotone"
+            dataKey="averageCycleTimeInDays"
+            stroke={CycleaTimeGraph_Legend[0].color}
+            strokeWidth={3}
+            dot={false}
+          />
+        </ComposedChart>
       </ResponsiveContainer>
-      <CustomLegend />
+      <CustomGraphLegend colors={CycleaTimeGraph_Legend} />
+      <div className="cycle-time-description-container">
+        <h3>What is Cycle Time?</h3>
+        <p>
+          <b>Cycle Time</b> for a pull request is the total time taken from when
+          the PR is opened until it is merged or closed. It helps teams measure
+          development efficiency and identify bottlenecks in the review process.
+        </p>
+        <div className="cycle-time-formula-box">
+          <span className="formula-label">Formula:</span>
+          <span className="formula-content">
+            Cycle Time = <b>PR Closed Date</b> − <b>PR Opened Date</b>
+          </span>
+        </div>
+        <ul className="cycle-time-tips">
+          <li>
+            Shorter cycle times indicate faster delivery and review processes.
+          </li>
+          <li>Track trends to spot process improvements or slowdowns.</li>
+        </ul>
+      </div>
     </div>
   );
 };
 
-export default CycleTimeGraph; 
+export default CycleTimeGraph;
