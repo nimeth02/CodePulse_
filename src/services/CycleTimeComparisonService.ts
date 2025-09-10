@@ -18,7 +18,7 @@ export const getCycleTimeComparisonData = async (
   projectId: string,
   year: number
 ): Promise<CycleTimeComparisonData[]> => {
-  const response = await axiosInstance.get(`/CycleTimeComparison`, {
+  const response = await axiosInstance.get(`/cycle-time-comparison`, {
     params: {
       projectId,
       year,

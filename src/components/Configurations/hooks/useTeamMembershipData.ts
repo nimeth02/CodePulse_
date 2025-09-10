@@ -6,8 +6,8 @@ import {
 } from "../../../services/TeamConfigurationService";
 import { useProject } from "context/ProjectContext";
 
-export const useTeamConfiguration = (
-  selectedTeam: string,
+export const useTeamMembershipData = (
+  selectedTeam: TeamData | undefined,
   selectedUsers: string[],
   setSelectedUsers: Dispatch<SetStateAction<string[]>>
 ) => {
@@ -28,7 +28,7 @@ export const useTeamConfiguration = (
 
   useEffect(() => {
     if (selectedTeam) {
-      loadTeamMembers(selectedTeam);
+      loadTeamMembers(selectedTeam.teamId);
     }
   }, [selectedTeam]);
 
@@ -113,6 +113,9 @@ export const useTeamConfiguration = (
 
   const handleAddToTeam = async () => {
     try {
+      if (!selectedTeam) {
+        return;
+      }
       setIsLoading(true);
       setError(null);
 
@@ -121,14 +124,33 @@ export const useTeamConfiguration = (
       }
 
       await TeamConfigurationService.createTeamMember(
-        selectedTeam,
+        selectedTeam.teamId,
         selectedUsers
       );
-      loadTeamMembers(selectedTeam);
+      loadTeamMembers(selectedTeam.teamId);
       setSelectedUsers([]);
     } catch (error) {
       console.error("Error adding members to team:", error);
       setError("Failed to add members to team");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleDeleteTeamMembership = async (
+    teamId: string,
+    userId:string
+  ) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      await TeamConfigurationService.deleteTeamMembership(teamId,userId);
+      loadTeamMembers(teamId);
+ // Reload teams after creating a new one
+    } catch (error) {
+      console.error("Error creating team:", error);
+      setError("Failed to create team");
     } finally {
       setIsLoading(false);
     }
@@ -142,5 +164,6 @@ export const useTeamConfiguration = (
     error,
     handleAddToTeam,
     handleCreateTeam,
+    handleDeleteTeamMembership
   };
 };

@@ -19,7 +19,7 @@ export const getPRComparisonData = async (
   projectId: string,
   year: number
 ): Promise<PRComparisonData[]> => {
-  const response = await axiosInstance.get(`/PRClosedComparison`, {
+  const response = await axiosInstance.get(`/pr-closed-comparison`, {
     params: {
       projectId,
       year,

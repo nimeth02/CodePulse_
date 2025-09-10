@@ -12,7 +12,7 @@ export const getPRClosedData = async (
   teamId: string,
   year: number
 ): Promise<PRClosedData[]> => {
-  const response = await axiosInstance.get(`/PRClosed`, {
+  const response = await axiosInstance.get(`/pr-closed`, {
     params: {
       projectId,
       teamId,

@@ -7,6 +7,7 @@ import {
   CycleTimeComparisonGraph,
 } from "./Graphs";
 import React from "react";
+import ErrorBoundary from "../Common/ErrorBoundaries/ErrorBoundary";
 
 const GraphContainer = ({
   type,

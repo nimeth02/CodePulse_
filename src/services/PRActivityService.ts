@@ -17,13 +17,15 @@ export interface UserPRActivityData {
 export const getprActivityData = async (
   projectId: string,
   teamId: string,
-  year: number
+  year: number,
+  selectedMonth:number
 ): Promise<prActivityData[]> => {
-  const response = await axiosInstance.get(`/PRActivity`, {
+  const response = await axiosInstance.get(`/pr-activity`, {
     params: {
       projectId,
       teamId,
       year,
+      month:selectedMonth
     },
   });
 
@@ -33,13 +35,15 @@ export const getprActivityData = async (
 export const getUserPRActivityData = async (
   projectId: string,
   teamId: string,
-  year: number
+  year: number,
+  selectedMonth:number
 ): Promise<UserPRActivityData[]> => {
-  const response = await axiosInstance.get(`/PRActivity/user`, {
+  const response = await axiosInstance.get(`/pr-activity/user`, {
     params: {
       projectId,
       teamId,
       year,
+      month:selectedMonth
     },
   });
 

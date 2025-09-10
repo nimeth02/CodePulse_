@@ -1,4 +1,5 @@
-import { TeamData } from "../../../services/ProjectTeams";
+import { TeamData } from "../../../services/TeamConfigurationService";
+
 
 export type GraphType = 'closed' | 'closedComparison' | 'cycleTime'|'prActivity'|'cycleTimeComparison';
 

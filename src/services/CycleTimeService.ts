@@ -10,7 +10,7 @@ export const getCycleTimeData = async (
   teamId: string,
   year: number
 ): Promise<CycleTimeData[]> => {
-  const response = await axiosInstance.get(`/CycleTime`, {
+  const response = await axiosInstance.get(`/cycle-time`, {
     params: {
       projectId,
       teamId,

@@ -11,8 +11,14 @@ export interface projectData {
 export const getProjectData = async (
   projectId: string
 ): Promise<projectData> => {
-  const response = await axiosInstance.get(`/Project/${projectId}`);
-  console.log(response);
+  try {
+    const response = await axiosInstance.get(`/projects/${projectId}`);
+    console.log(response);
+  
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching teams:", error);
+    throw error;
+  }
 
-  return response.data.data;
 };

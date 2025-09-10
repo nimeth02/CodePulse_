@@ -1,5 +1,5 @@
+import { TeamData } from "../../../services/TeamConfigurationService";
 import { GraphType } from "./GraphType";
-import { TeamData } from "@services/ProjectTeams";
 
 export type GraphSelectorProps = {
   activeTab: GraphType;
@@ -15,3 +15,8 @@ export type TimeSelectorProps = {
   selectedTime: number;
   setSelectedTime: (selectedTime: number) => void;
 };
+
+export type  MonthSelectorProps= {
+  selectedMonth: number;
+  setSelectedMonth:(selectedMonth: number) => void;
+}

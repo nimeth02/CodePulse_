@@ -15,3 +15,7 @@ export interface TeamMember {
   teamId: string;
   user: User;
 }
+
+export type toggle = "create" | "edit" | "delete"
+
+

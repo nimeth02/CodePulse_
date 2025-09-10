@@ -9,26 +9,50 @@ const ProjectContext = createContext<
   | undefined
 >(undefined);
 
+
+const queryParams = new URLSearchParams(window.location.search);
+const projectIdFromQuery = queryParams.get("projectId") ?? "";
+
 const initialProject: projectData = {
-  projectId: "6c0f9fba-f6a4-44e6-9c52-10b251c1d777",
+  projectId:projectIdFromQuery,
   projectName: "",
   projectCode: "",
   providerType: "",
   projectCreatedAt: "",
 };
 
+
+
 export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [project, setProject] = useState<projectData>(initialProject);
+  const [error, setError] = useState<string | null>(null);
+  
+  // const projectId = window.location.pathname.split("/").pop();
+  // console.log(projectId)
 
   useEffect(() => {
     const fetchData = async () => {
-      const projectResponse = await getProjectData(project.projectId);
-      setProject(projectResponse);
+      if (!project.projectId) {
+        setError("Project ID is missing in the URL.");
+        return;
+      }
+
+      try {
+        const projectResponse = await getProjectData(project.projectId);
+        if (!projectResponse) {
+          throw new Error("Project not found");
+        }
+        setProject(projectResponse);
+      } catch (err) {
+        console.error("Failed to fetch project data:", err);
+        setError("Invalid or missing project ID.");
+      }
     };
+
     fetchData();
-  }, []);
+  }, [project.projectId]);
 
   return (
     <ProjectContext.Provider value={{ project, setProject }}>

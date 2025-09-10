@@ -8,6 +8,7 @@ import { PRActivityGraph_Legend } from "../Constants/graphLegends";
 import CustomGraphLegend from "../Components/CustomGraphLegend";
 import { usePRActivityData } from "../hooks/usePRActivityData";
 import { useProject } from "../../../context/ProjectContext";
+import PRActivityMonthSelector from "../Selectors/PRActivityMonthSelector";
 
 
 const renderCustomizedLabel = ({ cx, cy }: any) => {
@@ -31,11 +32,14 @@ const PRActivityGraph: React.FC<GraphProps> = ({
   year,
 }) => {
   console.log("PR Activity Graph");
+  
+  const [selectedMonth, setSelectedMonth] = useState<number>(0);
   const {project}=useProject()
 
   const { error, loading, data, devTableData } = usePRActivityData(
     selectedTeam.teamId,
-    year
+    year,
+    selectedMonth
   );
 
   if (loading) {
@@ -81,6 +85,7 @@ const PRActivityGraph: React.FC<GraphProps> = ({
           </ResponsiveContainer>
         </div>
         <CustomGraphLegend colors={PRActivityGraph_Legend} />
+        <PRActivityMonthSelector selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
       </div>
       <div className="pr-activity-table-container">
         <table className="pr-activity-table">

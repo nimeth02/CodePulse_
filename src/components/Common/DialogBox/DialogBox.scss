@@ -1,0 +1,58 @@
+@import "../../../theme/styles/variables.scss";
+
+.dialog-container {
+    .MuiPaper-root {
+      border-radius: 12px;
+      min-width: 400px;
+    }
+  }
+  
+  .dialog-heading {
+    @include font-style(sub-heading);
+  }
+  
+  .dialog-content {
+    @include font-style(body);
+  }
+  
+  .dialog-actions {
+    padding: 16px 24px 20px;
+    gap: 12px;
+    
+    .dialog-btn {
+      min-width: 100px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-transform: none;
+      transition: all 0.2s ease;
+      
+      &:disabled {
+        background-color: #cbd5e1;
+        color: #64748b;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+    
+    .dialog-btn-cancel {
+      border: 1px solid #cbd5e1;
+      color:$secondary-color;
+      
+      &:hover:not(:disabled) {
+      }
+    }
+    
+    .dialog-btn-confirm {
+      background-color:$primary-color;
+      
+      &:hover:not(:disabled) {
+        background-color: $primary-color;;
+      }
+      
+      &:active:not(:disabled) {
+        background-color: $primary-color;;
+      }
+    }
+  }

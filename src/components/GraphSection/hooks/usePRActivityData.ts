@@ -9,7 +9,8 @@ import { useProject } from "context/ProjectContext";
 
 export const usePRActivityData = (
   selectedTeam: string,
-  year: number
+  year: number,
+  selectedMonth:number
 ) => {
   const {project}=useProject()
 
@@ -23,11 +24,12 @@ export const usePRActivityData = (
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await getprActivityData(projectId, selectedTeam, year);
+        const response = await getprActivityData(projectId, selectedTeam, year,selectedMonth);
         const userresponse = await getUserPRActivityData(
           projectId,
           selectedTeam,
-          year
+          year,
+          selectedMonth
         );
         setData(response);
         setDevTableData(userresponse);
@@ -41,7 +43,7 @@ export const usePRActivityData = (
     };
 
     fetchData();
-  }, [projectId, selectedTeam, year]);
+  }, [projectId, selectedTeam, year,selectedMonth]);
 
   return { error, loading, data, devTableData };
 };

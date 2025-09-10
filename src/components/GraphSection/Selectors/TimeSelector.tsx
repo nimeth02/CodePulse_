@@ -6,7 +6,7 @@ import { useProject } from "context/ProjectContext";
 const TimeSelector = ({ selectedTime, setSelectedTime }: TimeSelectorProps) => {
   const { project } = useProject();
 
-  const startYear = project?.projectCreatedAt
+  const startYear =project?.providerType == "github" && project?.projectCreatedAt
     ? new Date(project.projectCreatedAt).getFullYear()
     : 2010; // fallback year
 

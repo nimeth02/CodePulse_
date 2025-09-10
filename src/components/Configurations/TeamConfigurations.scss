@@ -22,9 +22,99 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 20px;
     padding: 15px;
     border-right: 1px solid #eee;
+
+    .team-section{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .edit-section{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 100px;
+      margin-top: 10px;
+
+      .create-btn {
+        @extend .base-button;
+        &:disabled {
+          background: #cbd5e1;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+
+        &:hover:not(:disabled)::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    .team-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #f3f4f6;
+      }
+
+      .team-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .team-name {
+          font-weight: 500;
+          color: #1f2937;
+        }
+
+        .team-status {
+          font-size: 0.75rem;
+          color: #6b7280;
+        }
+      }
+
+      .team-actions {
+        display: flex;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        .edit-icon-btn {
+          background: none;
+          border: none;
+          padding: 4px;
+          border-radius: 4px;
+          cursor: pointer;
+          color: #6b7280;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background-color: #e5e7eb;
+            color: #374151;
+          }
+
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+
+      &:hover .team-actions {
+        opacity: 1;
+      }
+    }
 
     .team-selector {
       .team-select {
@@ -63,13 +153,45 @@
         margin-bottom: 10px;
       }
 
+
+
       .members-list {
         @include font-style(body);
         .member-item {
           padding: 8px;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 12px;
+          align-items: center;
           border-bottom: 1px solid #eee;
+          
           &:last-child {
             border-bottom: none;
+          }
+
+          .member-name {
+          }
+
+          .member-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+
+            .edit-member-btn {
+              background: none;
+              border: none;
+              padding: 4px;
+              border-radius: 4px;
+              cursor: pointer;
+              color: #6b7280;
+              transition: all 0.2s ease;
+              font-size: 0.75rem;
+
+              &:hover {
+                background-color: #e5e7eb;
+                color: #374151;
+              }
+            }
           }
         }
       }
@@ -164,7 +286,6 @@
       }
 
       .create-btn {
-
         @extend .base-button;
         &:disabled {
           background: #cbd5e1;
@@ -179,4 +300,182 @@
       }
     }
   }
+
+  .edit-team-container {
+    @extend .create-team-container;
+    background: linear-gradient(to right, #fef7ff, #faf5ff);
+    border: 1px solid #e9d5ff;
+
+    .edit-team-heading {
+      @include font-style(sub-heading);
+      color: #7c3aed;
+    }
+
+    .edit-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      .cancel-btn {
+        @extend .base-button;
+        background-color: #6b7280;
+        color: #fff;
+
+        &:hover {
+          background-color: #4b5563;
+        }
+      }
+    }
+  }
+
+  .delete-team-container {
+    @extend .create-team-container;
+    background: linear-gradient(to right, #fef2f2, #fef2f2);
+    border: 1px solid #fecaca;
+
+    .delete-team-heading {
+      @include font-style(sub-heading);
+      color: #dc2626;
+    }
+
+    .delete-confirmation {
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+
+      p {
+        margin: 0.5rem 0;
+        color: #374151;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+
+        strong {
+          color: #1f2937;
+        }
+      }
+    }
+
+    .delete-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      .delete-btn {
+        @extend .base-button;
+        background-color: #dc2626;
+        color: #fff;
+
+        &:hover {
+          background-color: #b91c1c;
+        }
+
+        &:disabled {
+          background-color: #f87171;
+          cursor: not-allowed;
+        }
+      }
+
+      .cancel-btn {
+        @extend .base-button;
+        background-color: #6b7280;
+        color: #fff;
+
+        &:hover {
+          background-color: #4b5563;
+        }
+      }
+    }
+  }
+
+  .delete-dialog {
+    .MuiDialog-paper {
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .MuiDialogTitle-root {
+      font-weight: 600;
+      color: #8B4513;
+      font-size: 1.25rem;
+      padding: 1.5rem 1.5rem 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .MuiDialogContent-root {
+      padding: 1rem 1.5rem;
+      color: #1f2937;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .MuiDialogActions-root {
+      padding: 1rem 1.5rem 1.5rem;
+      gap: 0.75rem;
+      justify-content: flex-end;
+
+      .MuiButton-root {
+        border-radius: 8px;
+        text-transform: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        min-width: 80px;
+
+        &.MuiButton-outlined {
+          border: 1px solid #d1d5db;
+          color: #6b7280;
+          background-color: #ffffff;
+
+          &:hover {
+            background-color: #f9fafb;
+            border-color: #9ca3af;
+          }
+        }
+
+        &.MuiButton-contained {
+          background-color: #dc2626;
+          color: #ffffff;
+
+          &:hover {
+            background-color: #b91c1c;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.members-list.scrollable,
+.users-list.scrollable {
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding-right: 8px; /* Space for scrollbar */
+}
+
+/* Optional: Style the scrollbar for better aesthetics */
+.members-list.scrollable::-webkit-scrollbar,
+.users-list.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.members-list.scrollable::-webkit-scrollbar-track,
+.users-list.scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light background for scrollbar track */
+  border-radius: 4px;
+}
+
+.members-list.scrollable::-webkit-scrollbar-thumb,
+.users-list.scrollable::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar thumb color */
+  border-radius: 4px;
+}
+
+.members-list.scrollable::-webkit-scrollbar-thumb:hover,
+.users-list.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
 }
